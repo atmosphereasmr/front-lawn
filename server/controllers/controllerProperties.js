@@ -6,29 +6,10 @@ module.exports = {
     const dbInstance = req.app.get('db');
     const { search } = req.query;
 
-    dbInstance.properties.get_properties_search()
+    dbInstance.properties.get_properties_search([ search + '%'])
       .then(response => res.status(200).send(response))
       .catch(error => console.log(error))
   },
-
-  getApartments: (req, res, next) => {
-    const dbInstance = req.app.get('db');
-    const { search } = req.query;
-
-    dbInstance.properties.get_apartments()
-      .then(response => res.status(200).send(response))
-      .catch(error => console.log(error))
-  },
-
-  getCondos: (req, res, next) => {
-    const dbInstance = req.app.get('db');
-    const { search } = req.query;
-
-    dbInstance.properties.get_condos()
-      .then(response => res.status(200).send(response))
-      .catch(error => console.log(error))
-  },
-
 
 
 
@@ -49,9 +30,9 @@ module.exports = {
   //
   addProperty: (req, res, next) => {
     const dbInstance = req.app.get('db');
-    const { property_id, property_user, property_name, summary, image_med, street, city, state, country, postal_code, latitude, longitude, property_type, room_type, price } = req.body;
+    const { property_user, property_name, summary, image_med, street, city, state, country, postal_code, latitude, longitude, property_type, room_type, price } = req.body;
 
-    dbInstance.properties.add_property({ property_id, property_user, property_name, summary, image_med, street, city, state, country, postal_code, latitude, longitude, property_type, room_type, price })
+    dbInstance.properties.add_property({ property_user, property_name, summary, image_med, street, city, state, country, postal_code, latitude, longitude, property_type, room_type, price })
       .then(response => res.status(200).send(response))
       .catch(error => console.log(error))
   },
@@ -82,11 +63,11 @@ module.exports = {
 
   // Delete Booking
   // api/homes/bookingId
-  deleteBooking: (req, res, next) => {
+  book: (req, res, next) => {
     const dbInstance = req.app.get('db');
-    const { bookingId } = req.params;
+    const { propertyId } = req.params;
 
-    dbInstance.properties.delete_booking({ bookingId })
+    dbInstance.properties.book({ propertyId })
       .then(response => res.status(200).send(response))
       .catch(error => console.log(error))
   },

@@ -1,2 +1,2 @@
 SELECT * FROM properties
-WHERE city LIKE $1;
+WHERE location LIKE $1;

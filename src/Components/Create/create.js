@@ -7,7 +7,6 @@ export default class Create extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            property_id: "555",
             property_user: "1",
             property_name: "",
             summary: "",
@@ -26,7 +25,7 @@ export default class Create extends Component {
     }
 
     submit() {
-        axios.post("http://localhost:3001/api/add", this.state)
+        axios.post("http://localhost:3000/api/add", {withCredentials: true}, this.state)
     }
 
     render() {
