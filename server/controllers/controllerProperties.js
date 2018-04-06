@@ -11,6 +11,15 @@ module.exports = {
       .catch(error => console.log(error))
   },
 
+  //Get Home page
+  //  api/homes/propertyId
+  getPropertyHome: (req, res, next) => {
+    const dbInstance = req.app.get('db');
+
+    dbInstance.properties.get_home()
+    .then(response => res.status(200).send(response))
+    .catch(error => console.log(error))
+  },
 
 
   //Get Single Property Listing

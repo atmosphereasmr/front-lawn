@@ -46,6 +46,7 @@ app.get('/api/user/:userId', isLoggedIn, ctrlUsers.getUserProfile)
 app.get('/api/user/:userId/homes', isLoggedIn, ctrlUsers.getUserHomes)
 app.put('/api/user/update/:userId', isLoggedIn, ctrlUsers.updateUser)
 
+app.get('/api/home', ctrlProperties.getPropertyHome)
 app.get('/api/properties', ctrlProperties.getPropertySearch)
 app.get('/api/property/:propertyId', ctrlProperties.getProperty)
 app.post('/api/add', isLoggedIn, ctrlProperties.addProperty)
@@ -57,7 +58,7 @@ app.put('/api/property/:propertyId/book', isLoggedIn, ctrlProperties.book)
 
 
 // ===== Listen ===============
-const port = 3000;
+const port = 3001;
 app.listen(port, () => {
   console.log('I like to listen. I have learned a great deal from listening carefully. Most people never listen. Im listening on port: ', port);
 })

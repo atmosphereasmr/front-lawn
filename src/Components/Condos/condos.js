@@ -17,19 +17,33 @@ export default class Condos extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:3001/api/apartments')
+        axios.get('http://localhost:3001/api/home')
             .then(res => {
                 const rawApartments = [res.data]
-                const eightApartments = rawApartments[0].splice(0, 8)
-                this.setState({ apartments: eightApartments})
-            })
-                axios.get('http://localhost:3001/api/condos')
-            .then(res => {
-                const rawCondos = [res.data]
-                const eightCondos = rawCondos[0].splice(0, 8)
-                this.setState({ condos: eightCondos})
-            }), () => console.log(this.state)
-
+                console.log('resss', res.data)
+                var resApartments = [];
+                var resCondos = [];
+                var resHouses = [];
+                  for (let i = 0; i <= res.data.length - 1; i++){
+                    console.log('data', res.data[i].property_type)
+                      if (i<=7){
+                          resApartments.push(res.data[i])
+                        }
+                      else if (i>7 && i<=15){
+                          resCondos.push(res.data[i])
+                        }
+                      else {
+                          resHouses.push(res.data[i])
+                        }
+                    }
+                    console.log('final', resHouses)
+                    this.setState({
+                      apartments: resApartments,
+                      condos: resCondos,
+                      houses: resHouses
+                     })
+                  }
+            )
     }
 
     propertyClick(price) {
@@ -46,7 +60,7 @@ export default class Condos extends Component {
                 <div className="featured-condos-container">
                 {this.state.apartments.map(item => {
                     return (
-                            <div className="featured-condo">
+                      <div className="featured-condo">
                         <div className="featured-condo-pic" style={{ backgroundImage: `url("${item.image_med}")` }} onClick={() => this.propertyClick(item.price)}>
                         </div>
                         <p className="featured-condo-rooms-font">{item.city}</p>
@@ -59,7 +73,7 @@ export default class Condos extends Component {
                             </div>
                             <p>• Superhost</p>
                         </div>
-                        </div>
+                      </div>
                     )
                 })}
                 </div>
