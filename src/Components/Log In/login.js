@@ -13,7 +13,11 @@ export default class Login extends Component {
     }
 
     register() {
-        axios.post('http://localhost:3000/api/auth/login', this.state)
+        axios.post('http://localhost:3001/api/auth/login', {
+          withCredentials: true,
+          username: this.state.username,
+          password: this.state.password
+      })
         .then(res => console.log(res))
     }
 

@@ -17,7 +17,7 @@ export default (
   <Switch>
     <Route component={Condos} path="/" exact/>
     <Route component={SearchCondos} path="/search-condos"/>
-    <Route component={Room} path="/room"/>
+    <Route component={Room} path="/room/:id"/>
     <Route component={Host} path="/host"/>
     <Route component={Create} path="/create"/>
     <Route component={Update} path="/update"/>

@@ -18,6 +18,7 @@
   "homepage": "https://github.com/scdozer/housebnb-backyard#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
     "dotenv": "^5.0.0",
     "express": "^4.16.2",

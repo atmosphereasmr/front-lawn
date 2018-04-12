@@ -29,6 +29,12 @@
     height: 300px;
 }
 
+.featured-condo a{
+  text-decoration: none;
+  padding: 0px;
+  margin: 0px;
+}
+
 .featured-condo-pic {
     width: 100%;
     height: 50%;
@@ -61,6 +67,7 @@
     font-size: 16px;
     font-style: bold;
     color: #990000;
+    margin: 0px;
 }
 
 .featured-condo-name-font {
@@ -70,6 +77,7 @@
     font-size: 20px;
     color: #484848;
     cursor: pointer;
+    margin: 0px;
 }
 
 .featured-condo-price-font {
@@ -78,6 +86,7 @@
     font-family: 'Roboto Condensed', sans-serif;
     font-size: 16px;
     color: #128700;
+    margin: 8px 0px;
 }
 
 .ratings-container {

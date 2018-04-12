@@ -1,5 +1,5 @@
 const express = require('express'),
-    jwt = require('jsonwebtoken'),
+    cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     cors = require('cors'),
     session = require('express-session'),
@@ -10,9 +10,14 @@ const isLoggedIn = require('./middlewares/isLoggedIn');
 require('dotenv').config();
 
 const app = express();
-
+app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(cors());
+
+app.use(cors({
+    origin:['http://localhost:3000'],
+    methods:['GET','POST'],
+    credentials: true // enable set cookie
+}));
 
 app.use(
   session({
@@ -53,7 +58,7 @@ app.post('/api/add', isLoggedIn, ctrlProperties.addProperty)
 app.put('/api/property/:propertyId/update', isLoggedIn, ctrlProperties.updateProperty)
 app.delete('/api/delete/:propertyId', isLoggedIn, ctrlProperties.deleteProperty)
 
-app.put('/api/property/:propertyId/book', isLoggedIn, ctrlProperties.book)
+app.put('/api/property/book/:propertyId', isLoggedIn, ctrlProperties.book)
 
 
 

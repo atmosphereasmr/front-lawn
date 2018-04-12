@@ -37,11 +37,9 @@ module.exports = {
     const { username, password } = req.body;
     dbInstance.users.auth_login({username, password})
       .then(
-        (response) => {
-          req.session.userId = response;
-          res.status(200).send(response);
-          console.log('session:   ', req.session.userId);
-          console.log('response:   ', response);
+        response => {
+          req.session.userid = response[0].user_id;
+          res.status(200).send(response[0]);
         })
       .catch(error => console.log(error))
   },
@@ -52,7 +50,7 @@ module.exports = {
     dbInstance.users.auth_register({username, password, first_name, last_name, bio})
     .then(
       (response) => {
-        req.session.userId = response;
+        // req.session.userId = response;
         res.status(200).send(response);
       })
       .catch(error => console.log(error))

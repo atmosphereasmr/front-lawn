@@ -1,2 +1,3 @@
 SELECT user_id FROM users
-WHERE username = ${username} AND password = ${password};
+WHERE username = ${username}
+AND password = ${password};

@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Home from '../Home/home'
 import "./condos.css"
 import axios from 'axios'
+import { Link } from 'react-router-dom';
+
 
 export default class Condos extends Component {
 
@@ -20,12 +22,10 @@ export default class Condos extends Component {
         axios.get('http://localhost:3001/api/home')
             .then(res => {
                 const rawApartments = [res.data]
-                console.log('resss', res.data)
                 var resApartments = [];
                 var resCondos = [];
                 var resHouses = [];
                   for (let i = 0; i <= res.data.length - 1; i++){
-                    console.log('data', res.data[i].property_type)
                       if (i<=7){
                           resApartments.push(res.data[i])
                         }
@@ -36,7 +36,6 @@ export default class Condos extends Component {
                           resHouses.push(res.data[i])
                         }
                     }
-                    console.log('final', resHouses)
                     this.setState({
                       apartments: resApartments,
                       condos: resCondos,
@@ -61,19 +60,21 @@ export default class Condos extends Component {
                 {this.state.apartments.map(item => {
                     return (
                       <div className="featured-condo">
-                        <div className="featured-condo-pic" style={{ backgroundImage: `url("${item.image_med}")` }} onClick={() => this.propertyClick(item.price)}>
-                        </div>
-                        <p className="featured-condo-rooms-font">{item.city}</p>
-                        <p className="featured-condo-name-font">{item.property_name}</p>
-                        <p className="featured-condo-price-font">${item.price}</p>
-                        <div className="ratings-container">
-                            <div className="stars-container">
-                                <p className="star-color">★★★★★</p>
-                                <p>(139)</p>
-                            </div>
-                            <p>• Superhost</p>
-                        </div>
-                      </div>
+                        <Link to = {`/room/${item.property_id}`}>
+                          <div className="featured-condo-pic" style={{ backgroundImage: `url("${item.image_med}")` }}>
+                          </div>
+                          <p className="featured-condo-rooms-font">{item.city}</p>
+                          <p className="featured-condo-name-font">{item.property_name}</p>
+                          <p className="featured-condo-price-font">${item.price}</p>
+                          <div className="ratings-container">
+                              <div className="stars-container">
+                                  <p className="star-color">★★★★★</p>
+                                  <p>(139)</p>
+                              </div>
+                              <p>• Superhost</p>
+                          </div>
+                          </Link>
+                          </div>
                     )
                 })}
                 </div>
@@ -83,7 +84,8 @@ export default class Condos extends Component {
                 <div className="featured-condos-container">
                 {this.state.condos.map(item => {
                     return (
-                            <div className="featured-condo">
+                    <div className="featured-condo">
+                      <Link to = {`/room/${item.property_id}`}>
                         <div className="featured-condo-pic" style={{ backgroundImage: `url("${item.image_med}")` }}>
                         </div>
                         <p className="featured-condo-rooms-font">{item.city}</p>
@@ -96,6 +98,7 @@ export default class Condos extends Component {
                             </div>
                             <p>• Superhost</p>
                         </div>
+                        </Link>
                         </div>
                     )
                 })}
@@ -106,20 +109,22 @@ export default class Condos extends Component {
                 <div className="featured-condos-container">
                 {this.state.apartments.map(item => {
                     return (
-                            <div className="featured-condo">
-                        <div className="featured-condo-pic" style={{ backgroundImage: `url("${item.image_med}")` }}>
-                        </div>
-                        <p className="featured-condo-rooms-font">{item.city}</p>
-                        <p className="featured-condo-name-font">{item.property_name}</p>
-                        <p className="featured-condo-price-font">${item.price}</p>
-                        <div className="ratings-container">
-                            <div className="stars-container">
-                                <p className="star-color">★★★★★</p>
-                                <p>(139)</p>
-                            </div>
-                            <p>• Superhost</p>
-                        </div>
-                        </div>
+                      <div className="featured-condo">
+                        <Link to = {`/room/${item.property_id}`}>
+                          <div className="featured-condo-pic" style={{ backgroundImage: `url("${item.image_med}")` }}>
+                          </div>
+                          <p className="featured-condo-rooms-font">{item.city}</p>
+                          <p className="featured-condo-name-font">{item.property_name}</p>
+                          <p className="featured-condo-price-font">${item.price}</p>
+                          <div className="ratings-container">
+                              <div className="stars-container">
+                                  <p className="star-color">★★★★★</p>
+                                  <p>(139)</p>
+                              </div>
+                              <p>• Superhost</p>
+                          </div>
+                          </Link>
+                          </div>
                     )
                 })}
                 </div>
