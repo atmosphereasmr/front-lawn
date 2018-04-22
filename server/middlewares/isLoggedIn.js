@@ -4,8 +4,8 @@ module.exports = ( req, res, next ) => {
     console.log('yup')
     next();
   }
-  else{
+  else {
     console.log('nooo')
-    res.redirect("http://localhost:3000/")
+    res.redirect('/api/login?failed=true');
   }
 };

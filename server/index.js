@@ -1,5 +1,4 @@
 const express = require('express'),
-    cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     cors = require('cors'),
     session = require('express-session'),
@@ -10,20 +9,21 @@ const isLoggedIn = require('./middlewares/isLoggedIn');
 require('dotenv').config();
 
 const app = express();
-app.use(cookieParser());
 app.use(bodyParser.json());
 
 app.use(cors({
-    origin:['http://localhost:3000'],
-    methods:['GET','POST'],
-    credentials: true // enable set cookie
+  origin: 'http://localhost:3000',
+  credentials: true
 }));
 
 app.use(
   session({
       secret: 'whatever',
-      resave: false,
-      saveUnititialized: false
+      resave: true,
+      saveUnititialized: false,
+      cookie: {
+        maxAge: 30 * 24 * 60 * 60 * 1000
+      }
     })
   );
 
@@ -43,12 +43,12 @@ massive(process.env.CONNECTION_STRING)
 
 
 // Auth Endpoints
-app.post('/api/auth/login', ctrlUsers.login);
+app.get('/api/auth/login/:username/:password', ctrlUsers.login);
 app.post('/api/auth/register', ctrlUsers.register);
 
 
-app.get('/api/user/:userId', isLoggedIn, ctrlUsers.getUserProfile)
-app.get('/api/user/:userId/homes', isLoggedIn, ctrlUsers.getUserHomes)
+app.get('/api/user/:userId', ctrlUsers.getUserProfile)
+app.get('/api/user/homes/:userId', ctrlUsers.getUserHomes)
 app.put('/api/user/update/:userId', isLoggedIn, ctrlUsers.updateUser)
 
 app.get('/api/home', ctrlProperties.getPropertyHome)
@@ -58,7 +58,7 @@ app.post('/api/add', isLoggedIn, ctrlProperties.addProperty)
 app.put('/api/property/:propertyId/update', isLoggedIn, ctrlProperties.updateProperty)
 app.delete('/api/delete/:propertyId', isLoggedIn, ctrlProperties.deleteProperty)
 
-app.put('/api/property/book/:propertyId', isLoggedIn, ctrlProperties.book)
+app.put('/api/property/book/:propertyId',isLoggedIn , ctrlProperties.book)
 
 
 
