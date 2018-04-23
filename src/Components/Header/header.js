@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './header.css'
+import { Link } from 'react-router-dom'
 import { connect } from "react-redux";
 import { isTyped, complete, deleteThis } from '../../reducer'
 
@@ -79,8 +80,11 @@ class Header extends Component {
                 </div>
                 <div className="header-container">
                     <div className="header-bar">
-                        <div className="housebnb-logo">
-                        </div>
+                        <Link className="housebnb-logo" to= {`/`} >
+                          <div >
+                          </div>
+                        </Link>
+                        {/**
                         <div className="condos-search-bar-off" id="search-bar">
                             <div className="glass-icon" />
                             <input placeholder="Anywhere • Condos"></input>
@@ -89,23 +93,33 @@ class Header extends Component {
                             <div className="glass-icon" />
                             <input placeholder="Search"></input>
                         </div>
+                        **/}
                         <div className="header-menu" id="header-menu">
-                            <div className="header-menu-item" onMouseOver={() => this.becomeHostHover()} onMouseLeave={() => this.becomeHostOff()}>
+                            {/**<div className="header-menu-item" onMouseOver={() => this.becomeHostHover()} onMouseLeave={() => this.becomeHostOff()}>
                                 <p>Become a host</p>
                                 <div className="become-host-box-off" id="become-host-box">
                                     <div className="become-host-menu">Host a home</div>
                                     <div className="become-host-menu">No time to host?</div>
                                     <div className="become-host-menu">Host an experience</div>
                                 </div>
-                            </div>
-                            <div className="header-menu-item" onClick={() => this.helpOn()}>
-                                <p>Help</p>
-                            </div>
-                            <div className="header-menu-item">
-                                <p>Sign up</p>
-                            </div>
-                            <div className="header-menu-item">
+                            </div> **/}
+                            <Link to={`/host/`} >
+                              <div className="header-menu-item">
+                                  <p>Profile</p>
+                              </div>
+                            </Link>
+                            <Link to={`/login/`} >
+                              <div className="header-menu-item">
                                 <p>Log in</p>
+                              </div>
+                            </Link>
+                            <Link to={`/register/`} >
+                              <div className="header-menu-item">
+                                  <p>Sign up</p>
+                              </div>
+                            </Link>
+                            <div className="header-menu-item" onClick={() => this.helpOn()}>
+                              <p>Help</p>
                             </div>
                         </div>
                     </div>

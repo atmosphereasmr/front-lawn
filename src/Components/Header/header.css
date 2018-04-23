@@ -38,6 +38,14 @@
     justify-content: space-around;
     align-items: center;
 }
+.header-menu a {
+  text-decoration: none;
+  color: #000;
+}
+
+.header-menu a:hover {
+  color: gray;
+}
 
 .header-menu-item {
     width: auto;

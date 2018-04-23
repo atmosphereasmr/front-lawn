@@ -7,17 +7,46 @@ export default class Register extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            username: "Logan91",
-            password: "password",
-            first_name: "Logan",
-            last_name: "Smith",
-            bio: "Young boy"
+          userData: {
+            username: "",
+            password: "",
+            firstName: "",
+            lastName: "",
+            bio: ""
+          }
         }
     }
 
+
+    handleChange = (event) =>{
+      const target = event.target;
+      const value = target.value;
+      const name = target.name;
+
+      let registerUser = Object.assign({}, this.state.userData);
+      registerUser[name] = value;
+
+      this.setState({
+        userData: registerUser
+      })
+    }
+
+
     register() {
-        axios.post('http://localhost:3000/api/auth/register', this.state)
-        .then(res => console.log(res))
+        axios.post('http://localhost:3001/api/auth/register', this.state.userData).then(res => {
+          axios.get(`http://localhost:3001/api/auth/login/${this.state.userData.username}/${this.state.userData.password}`, {
+             withCredentials: true
+           }).then( res => {
+             console.log('res', res.data.user_id);
+             if (res.data.user_id > 0){
+               this.props.history.push(`/host/${res.data.user_id}`);
+             } else {
+               this.props.history.push(`/register/`);
+             }
+           })
+         }
+        )
+
     }
 
     render() {
@@ -31,23 +60,53 @@ export default class Register extends Component {
                         <div className="register-subheader">
                             <div>• Create your username</div>
                         </div>
-                        <input className="register-input" placeholder="Username"></input>
+                        <input
+                          name="username"
+                          className="register-input"
+                          value={this.state.userData.username}
+                          placeholder="Username"
+                          onChange={this.handleChange}
+                          />
                         <div className="register-subheader">
                             <div>• Create your password</div>
                         </div>
-                        <input className="register-input" placeholder="Password"></input>
+                        <input
+                          name="password"
+                          className="register-input"
+                          value={this.state.userData.password}
+                          placeholder="Password"
+                          onChange={this.handleChange}
+                          />
                         <div className="register-subheader">
                             <div>• What is your first name?</div>
                         </div>
-                        <input className="register-input" placeholder="First name"></input>
+                        <input
+                          name="firstName"
+                          className="register-input"
+                          value={this.state.userData.firstName}
+                          placeholder="First Name"
+                          onChange={this.handleChange}
+                          />
                         <div className="register-subheader">
                             <div>• What is your last name?</div>
                         </div>
-                        <input className="register-input" placeholder="Last name"></input>
+                        <input
+                          name="lastName"
+                          className="register-input"
+                          value={this.state.userData.lastName}
+                          placeholder="Last Name"
+                          onChange={this.handleChange}
+                          />
                         <div className="register-subheader">
                             <div>• Write a short bio about you</div>
                         </div>
-                        <input className="register-input" placeholder="Bio"></input>
+                        <input
+                          name="bio"
+                          className="register-input"
+                          value={this.state.userData.bio}
+                          placeholder="Bio"
+                          onChange={this.handleChange}
+                          />
                         <div className="register-button-container">
                             <div className="register-button" onClick={() => this.register()}>
                                 <div>Register</div>

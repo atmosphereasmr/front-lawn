@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import './room.css'
 import axios from 'axios'
 import ScrollListener from 'react-scroll-listen'
@@ -20,7 +21,7 @@ export default class Room extends Component {
     }
 
     componentDidMount() {
-      axios.get(`http://localhost:3001/api/property/${this.props.match.params.id}`)
+      axios.get(`http://localhost:3001/api/property/${this.props.match.params.id}`, { withCredentials: true })
       .then(res => {
         this.setState({
           property: res.data,
@@ -66,7 +67,7 @@ export default class Room extends Component {
 
 
      bookProperty() {
-      axios.put(`http://localhost:3001/api/property/book/${this.props.match.params.id}`)
+      axios.put(`http://localhost:3001/api/property/book/${this.props.match.params.id}`, { withCredentials: true })
       .then(res => {
         this.setState({
           property: res.data,
@@ -74,6 +75,9 @@ export default class Room extends Component {
       }
     ).catch(error => console.log(error))
     }
+
+
+
     render() {
       if (this.state.property[0]){
         return (
@@ -119,17 +123,19 @@ export default class Room extends Component {
                                         </div>
                                     </div>
                                     <div className="room-host-container">
+
                                         <div className="room-host-pic-container">
                                             <div className="room-host-pic">
 
                                             </div>
                                         </div>
                                         <div className="host-text-container">
+                                          <Link to= {`/host/${this.state.property[0].property_user}`} >
                                             <div className="host-text">
                                                 <div>Logan, Your Host</div>
                                             </div>
+                                          </Link>
                                         </div>
-
                                     </div>
                                 </div>
                                 <div className="room-tour-container">

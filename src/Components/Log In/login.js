@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import  { Redirect } from 'react-router-dom'
 import axios from 'axios'
 import './login.css'
 
@@ -7,19 +8,40 @@ export default class Login extends Component {
     constructor(props) {
         super(props)
         this.state = {
+          userData: {
             username: "Logan91",
             password: "password"
+          },
+          loggedIn : false
         }
     }
 
-    register() {
-        axios.post('http://localhost:3001/api/auth/login', {
-          withCredentials: true,
-          username: this.state.username,
-          password: this.state.password
+    handleChange = (event) =>{
+      const target = event.target;
+      const value = target.value;
+      const name = target.name;
+
+      let loginUser = Object.assign({}, this.state.userData);
+      loginUser[name] = value;
+
+      this.setState({
+        userData: loginUser
       })
-        .then(res => console.log(res))
     }
+
+    register() {
+      axios.get(`http://localhost:3001/api/auth/login/${this.state.userData.username}/${this.state.userData.password}`, {
+         withCredentials: true
+       }).then( res => {
+         console.log('res', res.data.user_id);
+         if (res.data.user_id > 0){
+           this.props.history.push(`/host/${res.data.user_id}`);
+         } else {
+           this.props.history.push(`/login/`);
+         }
+       })
+    }
+
 
     render() {
         return (
@@ -32,11 +54,23 @@ export default class Login extends Component {
                         <div className="register-subheader">
                             <div>• Enter your username</div>
                         </div>
-                        <input className="register-input" placeholder="Username"></input>
+                        <input
+                          name="username"
+                          className="register-input"
+                          value={this.state.userData.username}
+                          placeholder="Username"
+                          onChange={this.handleChange}
+                          />
                         <div className="register-subheader">
                             <div>• Enter your password</div>
                         </div>
-                        <input className="register-input" placeholder="Password"></input>
+                        <input
+                          name="password"
+                          className="register-input"
+                          value={this.state.userData.password}
+                          placeholder="Password"
+                          onChange={this.handleChange}
+                          />
                         <div className="register-button-container">
                             <div className="register-button" onClick={() => this.register()}>
                                 <div>Log in</div>

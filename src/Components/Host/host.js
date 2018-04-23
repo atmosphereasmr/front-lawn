@@ -1,7 +1,35 @@
 import React, { Component } from 'react'
+import axios from 'axios'
+import { Link } from 'react-router-dom'
 import '../Host/host.css'
 
 export default class Host extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      userInfo: [],
+      userProperties: [],
+    }
+  }
+
+  componentDidMount(){
+    axios.get(`http://localhost:3001/api/user/${this.props.match.params.id}`, { withCredentials: true })
+      .then((res) => {
+        this.setState({
+          userInfo: res.data[0]
+        })
+        axios.get(`http://localhost:3001/api/user/homes/${this.props.match.params.id}`, { withCredentials: true })
+         .then((res) => {
+           this.setState({
+             userProperties: res.data
+           })
+         })
+       })
+
+
+  }
+
+
     render() {
         return (
             <div>
@@ -10,6 +38,12 @@ export default class Host extends Component {
                         <div className="profile-pic">
 
                         </div>
+
+                        <div className="button">
+                            <Link to="/create">Add Property</Link>
+                        </div>
+
+
                         <div className="verified-info-container">
                             <div className="verified-info-header">
                                 <div className="text-margin">Verified info</div>
@@ -62,7 +96,7 @@ export default class Host extends Component {
                     <div className="profile-body">
                         <div className="profile-header-container">
                             <div className="profile-header">
-                                <div>Jon Snow</div>
+                                <div>{this.state.userInfo.first_name} {this.state.userInfo.last_name}</div>
                             </div>
                             <div className="profile-location">
                                 <div>Eugene, Oregon, United States · Joined in August 2012</div>
@@ -71,7 +105,7 @@ export default class Host extends Component {
                                 <div>⚑ Report user</div>
                             </div>
                             <div className="profile-bio">
-                                <div>My family gives me life! I live in Eugene Oregon but my husband lives in LA. I travel there quite frequently. My favorite thing to do is spend time with my grand kids. They live on the east coast so I travel there quite a bit as well. I enjoy being outdoors running, hiking and at the beach!</div>
+                                <div>{this.state.userInfo.bio}</div>
                             </div>
                         </div>
                         <div className="profile-badge-container">
@@ -100,24 +134,20 @@ export default class Host extends Component {
                             <div>Hosted properties</div>
                         </div>
                         <div className="homes-container">
-                            <div className="home-item">
+                          {this.state.userProperties.map(item => {
+                              return (
+                                <div className="featured-condo">
+                                  <Link to = {`/room/${item.property_id}`}>
+                                    <div className="featured-condo-pic" style={{ backgroundImage: `url("${item.image_med}")` }}>
+                                    </div>
+                                    <p className="featured-condo-rooms-font">{item.city}</p>
+                                    <p className="featured-condo-name-font">{item.property_name}</p>
+                                    <p className="featured-condo-price-font">${item.price}</p>
 
-                            </div>
-                            <div className="home-item">
-
-                            </div>
-                            <div className="home-item">
-
-                            </div>
-                            <div className="home-item">
-
-                            </div>
-                            <div className="home-item">
-
-                            </div>
-                            <div className="home-item">
-
-                            </div>
+                                    </Link>
+                                    </div>
+                              )
+                          })}
                         </div>
                     </div>
                 </div>
