@@ -65,7 +65,7 @@ app.put('/api/property/book/:propertyId',isLoggedIn , ctrlProperties.book)
 
 
 // ===== Listen ===============
-const port = process.env.PORT;
+const port = 5432
 app.listen(port, () => {
   console.log('I like to listen. I have learned a great deal from listening carefully. Most people never listen. Im listening on port: ', port);
 })
