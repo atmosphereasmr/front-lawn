@@ -14,7 +14,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: true,
   credentials: true
 }));
 
@@ -65,7 +65,7 @@ app.put('/api/property/book/:propertyId',isLoggedIn , ctrlProperties.book)
 
 
 // ===== Listen ===============
-const port = 3001;
-app.listen(process.env.PORT, () => {
+const port = process.env.PORT;
+app.listen(port, () => {
   console.log('I like to listen. I have learned a great deal from listening carefully. Most people never listen. Im listening on port: ', port);
 })
