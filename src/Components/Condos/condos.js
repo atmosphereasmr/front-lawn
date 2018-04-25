@@ -19,8 +19,7 @@ export default class Condos extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://housebnb.herokuapp.com/api/home', {
-          withCredentials: true}
+        axios.get('http://housebnb.herokuapp.com:3001/api/home'
         )
             .then(res => {
                 const rawApartments = [res.data]
