@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express'),
     bodyParser = require('body-parser'),
     cors = require('cors'),
@@ -6,7 +8,7 @@ const express = require('express'),
 const ctrlUsers = require('./controllers/controllerUsers');
 const ctrlProperties = require('./controllers/controllerProperties');
 const isLoggedIn = require('./middlewares/isLoggedIn');
-require('dotenv').config();
+
 
 const app = express();
 app.use(bodyParser.json());
@@ -64,6 +66,6 @@ app.put('/api/property/book/:propertyId',isLoggedIn , ctrlProperties.book)
 
 // ===== Listen ===============
 const port = 3001;
-app.listen(port, () => {
+app.listen(process.env.PORT, () => {
   console.log('I like to listen. I have learned a great deal from listening carefully. Most people never listen. Im listening on port: ', port);
 })
